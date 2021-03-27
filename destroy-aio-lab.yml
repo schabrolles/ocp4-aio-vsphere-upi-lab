@@ -24,6 +24,7 @@
         src: /etc/resolv.conf.backup-aio
         dest: /etc/resolv.conf
         mode: '0644'
+        remote_src: true
       when:
         - config_local_dns is defined
         - resolv_conf_backup.stat.exists
