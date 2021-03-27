@@ -4,7 +4,7 @@ config:
   cluster_name: ocp46
   cluster_domain: ocp46.aio.pok
   fips: false
-  installer_ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  #installer_ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
   pull_secret: "{{ lookup('file', '~/seb/pull-secret.json') }}"
   worker_prefix: worker
 vcenter:
