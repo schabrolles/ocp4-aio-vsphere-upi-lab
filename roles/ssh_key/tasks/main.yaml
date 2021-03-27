@@ -1,0 +1,16 @@
+---
+- name: "create ssh keys"
+  user:
+    name: "{{ ansible_user }}"
+    generate_ssh_key: yes
+  become: True
+
+- name: "fetch all public ssh keys"
+  shell: cat ~/.ssh/id_rsa.pub
+  register: ssh_keys
+  become: True
+
+- name: "Set fact installer_ssh_key"
+  set_fact:
+    installer_ssh_key: "{{installer_ssh_key.stdout}}"
+    
