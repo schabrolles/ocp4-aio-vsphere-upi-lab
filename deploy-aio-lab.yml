@@ -10,13 +10,14 @@
   environment:
     PATH: "{{ playbook_dir }}/bin:{{ ansible_env.PATH }}"
   tasks:
-    - name: Run all the common tasks
-      import_role:
-        name: common
     - name: Set installer ssh_key
       import_role:
         name: ssh_key
-      when: installer_ssh_key is not defined or installer_ssh_key=""
+      when: installer_ssh_key is not defined
+    - name: Run all the common tasks
+      import_role:
+        name: common
+
 
 - hosts: bastion
   gather_facts: False
