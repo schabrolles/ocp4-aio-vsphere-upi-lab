@@ -1,0 +1,3 @@
+[bastion]
+#localhost
+129.40.61.34 ansible_user=root config_local_dns=true

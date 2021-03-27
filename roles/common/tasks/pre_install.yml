@@ -89,6 +89,7 @@
     src: "{{ playbook_dir }}/downloads/oc_client.tar.gz"
     dest: "{{ playbook_dir }}/bin"
     mode: '0775'
+    remote_src: true
   when: oc_client_download is changed
 
 - name: Unarchive openshift-install
@@ -96,6 +97,7 @@
     src: "{{ playbook_dir }}/downloads/openshift_install.tar.gz"
     dest: "{{ playbook_dir }}/bin"
     mode: '0775'
+    remote_src: true
   when: openshift_install_download is changed
 
 - name: Download govc
@@ -129,4 +131,5 @@
     src: "{{ playbook_dir }}/install-dir/install-config.yaml"
     dest: "{{ playbook_dir }}/install-dir/install-config.yaml.orig"
     mode: '0664'
+    remote_src: true
   when: (registry is not defined) or (registry.enabled is not defined) or (registry.enabled == false) # noqa 601

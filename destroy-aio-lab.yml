@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: bastion
   gather_facts: False
   environment:
     PATH: "{{ playbook_dir }}/bin:{{ ansible_env.PATH }}"

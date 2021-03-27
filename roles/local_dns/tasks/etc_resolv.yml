@@ -2,12 +2,14 @@
   copy:
     src: /etc/resolv.conf
     dest: /etc/resolv.conf.backup-aio
+    remote_src: true
     mode: '0644'
 
 - name: Insert CoreDNS IP as nameserver
   lineinfile:
     path: /etc/resolv.conf
-    insertafter: '^search'
+    insertbefore: '^nameserver'
+    firstmatch: yes
     line: "nameserver {{ coredns_vm.ipaddr }}"
 
 - name: Configure search

@@ -1,3 +1,10 @@
+
+  - name: set BootstrapContent ign file
+    slurp:
+      src: "{{ playbook_dir }}/install-dir/bootstrap.ign"
+    register: BootstrapContent 
+
+
   - name: Create bootstrap VM from the template
     vmware_guest:
       hostname: "{{ vcenter.ip }}"
@@ -23,11 +30,17 @@
       wait_for_ip_address: no
       customvalues:
         - key: guestinfo.ignition.config.data
-          value: "{{ BootstrapContent }}"
+          value: "{{ BootstrapContent.content }}"
         - key: guestinfo.ignition.config.data.encoding
           value: base64
         - key: guestinfo.afterburn.initrd.network-kargs
           value: "ip={{ bootstrap_vm.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ bootstrap_vm.name }}:ens192:off:{{ coredns_vm.ipaddr }}" # noqa 204
+
+
+  - name: set masterContent ign file
+    slurp:
+      src: "{{ playbook_dir }}/install-dir/master.ign"
+    register: masterContent 
 
   - name: Create master VMs from ther template
     vmware_guest:
@@ -55,13 +68,19 @@
       wait_for_ip_address: no
       customvalues:
        - key: guestinfo.ignition.config.data
-         value: "{{ masterContent }}"
+         value: "{{ masterContent.content }}"
        - key: guestinfo.ignition.config.data.encoding
          value: base64
        - key: guestinfo.afterburn.initrd.network-kargs
          value: "ip={{ item.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ item.name }}:ens192:off:{{ coredns_vm.ipaddr }}" # noqa 204
     loop: "{{ master_vms }}"
 
+
+  - name: set workerContent ign file
+    slurp:
+      src: "{{ playbook_dir }}/install-dir/worker.ign"
+    register: workerContent 
+ 
   - name: Create worker VMs from the template
     vmware_guest:
       hostname: "{{ vcenter.ip }}"
@@ -87,7 +106,7 @@
       wait_for_ip_address: no
       customvalues:
        - key: guestinfo.ignition.config.data
-         value: "{{ workerContent }}"
+         value: "{{ workerContent.content }}"
        - key: guestinfo.ignition.config.data.encoding
          value: base64
        - key: guestinfo.afterburn.initrd.network-kargs

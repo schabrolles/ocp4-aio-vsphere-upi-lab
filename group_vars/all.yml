@@ -1,53 +1,52 @@
 config:
   provider: vsphere
-  base_domain: example.com
+  base_domain: aio.pok
   cluster_name: ocp46
-  cluster_domain: ocp46.example.com
+  cluster_domain: ocp46.aio.pok
   fips: false
   installer_ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-  pull_secret: "{{ lookup('file', '~/pull-secret.json') }}"
+  pull_secret: "{{ lookup('file', '~/seb/pull-secret.json') }}"
   worker_prefix: worker
 vcenter:
-  ip: 10.0.0.200
-  datastore: ds0
-  network: 10.0.0.x-24
+  ip: 129.40.61.50
+  datastore: SAN_Datastore
+  network: v93
   service_account_username: administrator@vsphere.local
-  service_account_password: Password1!
+  service_account_password: Pwb1p038!
   admin_username: administrator@vsphere.local
-  admin_password: Password1!
-  datacenter: LAB
-  cluster: LAB
+  admin_password: Pwb1p038!
+  datacenter: B1P038
+  cluster: B1P038
   folder_absolute_path:
   vm_power_state: poweredon
   template_name: rhcos-vmware
 download:
   channel: stable
-  version: 4.6
+  version: 4.7
   govc: https://github.com/vmware/govmomi/releases/download/v0.24.0/govc_linux_amd64.gz
-  fcct: https://github.com/coreos/fcct/releases/download/v0.8.0/fcct-x86_64-unknown-linux-gnu
+  fcct: https://github.com/coreos/fcct/releases/download/v0.7.0/fcct-x86_64-unknown-linux-gnu
 coredns_vm:
   name: coredns
-  ipaddr: 10.0.0.10
-  upstream_dns: 8.8.8.8
+  ipaddr: 129.40.61.52
+  upstream_dns: 129.40.106.1
 lb_vm:
   name: lb
-  ipaddr: 10.0.0.11
+  ipaddr: 129.40.61.51
 bootstrap_vm:
   name: bootstrap
-  ipaddr: 10.0.0.20
+  ipaddr: 129.40.61.53
 master_vms:
-  - { name: "master1", ipaddr: "10.0.0.21", cpus: "4", memory_mb: "16384", disk_size_gb: "120"}
-  - { name: "master2", ipaddr: "10.0.0.22", cpus: "4", memory_mb: "16384", disk_size_gb: "120"}
-  - { name: "master3", ipaddr: "10.0.0.23", cpus: "4", memory_mb: "16384", disk_size_gb: "120"}
+  - { name: "master1", ipaddr: "129.40.61.54", cpus: "4", memory_mb: "16384", disk_size_gb: "120"}
+  - { name: "master2", ipaddr: "129.40.61.55", cpus: "4", memory_mb: "16384", disk_size_gb: "120"}
+  - { name: "master3", ipaddr: "129.40.61.56", cpus: "4", memory_mb: "16384", disk_size_gb: "120"}
 worker_vms:
-  - { name: "worker1", ipaddr: "10.0.0.24", cpus: "2", memory_mb: "8192", disk_size_gb: "120"}
-  - { name: "worker2", ipaddr: "10.0.0.25", cpus: "2", memory_mb: "8192", disk_size_gb: "120"}
+  - { name: "worker1", ipaddr: "129.40.61.57", cpus: "2", memory_mb: "8192", disk_size_gb: "120"}
+  - { name: "worker2", ipaddr: "129.40.61.58", cpus: "2", memory_mb: "8192", disk_size_gb: "120"}
 static_ip:
-  gateway: 10.0.0.1
-  netmask: 255.255.255.0
+  gateway: 129.40.61.62
+  netmask: 255.255.255.224
   network_interface_name: ens192
 ntp:
-  custom: false
+  custom: true
   ntp_server_list:
-    - 0.rhel.pool.ntp.org
-    - 1.rhel.pool.ntp.org
+    - clmaster.pbm.ihost.com

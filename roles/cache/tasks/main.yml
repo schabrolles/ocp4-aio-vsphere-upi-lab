@@ -45,7 +45,7 @@
   - name:  Set the download facts for localhost, which will be used later
     set_fact:
       download: "{{ download | combine({ item.key : item.value }, recursive=True) }}"
-    when: inventory_hostname == "localhost"
+      #    when: inventory_hostname == "localhost"
     loop:
       - { key: "ova", value: "{{ rhcos_url }}/{{ rhcos_content.content | regex_search('rhcos.*.ova') }}" }
       - { key: "openshiftClient", value: "{{ clients_url }}/{{ clients_content.content | regex_search('openshift-client-linux-.*.tar.gz') }}" }

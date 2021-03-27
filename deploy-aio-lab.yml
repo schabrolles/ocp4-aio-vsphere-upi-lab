@@ -1,12 +1,11 @@
----
-- hosts: localhost
+- hosts: bastion
   gather_facts: False
   tasks:
     - name: Set the cache of all the download links
       import_role:
         name: cache
 
-- hosts: localhost
+- hosts: bastion
   gather_facts: True
   environment:
     PATH: "{{ playbook_dir }}/bin:{{ ansible_env.PATH }}"
@@ -15,7 +14,7 @@
       import_role:
         name: common
 
-- hosts: localhost
+- hosts: bastion
   gather_facts: False
   environment:
     PATH: "{{ playbook_dir }}/bin:{{ ansible_env.PATH }}"
