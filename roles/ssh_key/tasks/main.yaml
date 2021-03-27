@@ -12,5 +12,7 @@
 
 - name: "Set fact installer_ssh_key"
   set_fact:
-    installer_ssh_key: "{{installer_ssh_key.stdout}}"
-    
+          config: "{{ config | combine({item.key: item.value}) }}"
+  with_items:
+   - key: installer_ssh_key 
+     value: "{{ssh_keys.stdout}}"

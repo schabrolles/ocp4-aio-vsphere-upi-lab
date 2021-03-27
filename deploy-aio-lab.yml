@@ -13,7 +13,7 @@
     - name: Set installer ssh_key
       import_role:
         name: ssh_key
-      when: installer_ssh_key is not defined
+      when: config.installer_ssh_key is not defined
     - name: Run all the common tasks
       import_role:
         name: common
