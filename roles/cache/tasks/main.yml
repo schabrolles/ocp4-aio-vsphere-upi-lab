@@ -42,7 +42,7 @@
       return_content: yes
     register: rhcos_content
 
-  - name:  Set the download facts for localhost, which will be used later
+  - name:  Set the download facts, which will be used later
     set_fact:
       download: "{{ download | combine({ item.key : item.value }, recursive=True) }}"
       #    when: inventory_hostname == "localhost"
