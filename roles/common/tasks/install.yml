@@ -3,8 +3,8 @@
 
     - name: Apply the patch to set mastersSchedulable to false
       patch:
-        src: "cluster-scheduler-02-ocp_config.yml.patch"
-        dest: "{{ playbook_dir }}/install-dir/manifests/cluster-scheduler-02-ocp_config.yml"
+        src: "cluster-scheduler-02-config.yml.patch"
+        dest: "{{ playbook_dir }}/install-dir/manifests/cluster-scheduler-02-config.yml"
 
     - name: Remove Master Machine manifests
       file:
