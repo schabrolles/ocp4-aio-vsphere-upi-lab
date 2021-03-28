@@ -1,4 +1,4 @@
-config:
+ocp_config:
   provider: vsphere
   base_domain: aio.pok
   cluster_name: ocp46

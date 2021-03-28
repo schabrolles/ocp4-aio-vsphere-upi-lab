@@ -18,13 +18,13 @@
     mode: 0664
 
 - name: Create HAProxy transpiled ignition file
-  shell: "{{ playbook_dir }}/bin/fcct -d {{ lb_tempdir.path }} --pretty --strict < {{ lb_tempdir.path }}/lb.fcc > {{ lb_tempdir.path }}/transpiled_config.ign" # noqa 301
+  shell: "{{ playbook_dir }}/bin/fcct -d {{ lb_tempdir.path }} --pretty --strict < {{ lb_tempdir.path }}/lb.fcc > {{ lb_tempdir.path }}/transpiled_ocp_config.ign" # noqa 301
 
 - name: Set lb_ign Fact
   #set_fact:
-  #lb_ign: "{{ lookup('file', '{{ lb_tempdir.path }}/transpiled_config.ign') | b64encode }}" # noqa 207
+  #lb_ign: "{{ lookup('file', '{{ lb_tempdir.path }}/transpiled_ocp_config.ign') | b64encode }}" # noqa 207
   slurp:
-    src: "{{ lb_tempdir.path }}/transpiled_config.ign"
+    src: "{{ lb_tempdir.path }}/transpiled_ocp_config.ign"
   register: lb_ign
 
 - name: Create HAProxy Loadbalancer VM from the template
@@ -50,9 +50,9 @@
     - name: "{{ vcenter.network }}"
     wait_for_ip_address: no
     customvalues:
-     - key: guestinfo.ignition.config.data
+     - key: guestinfo.ignition.ocp_config.data
        value: "{{ lb_ign.content }}"
-     - key: guestinfo.ignition.config.data.encoding
+     - key: guestinfo.ignition.ocp_config.data.encoding
        value: base64
      - key: guestinfo.afterburn.initrd.network-kargs
        value: "ip={{ lb_vm.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ lb_vm.name }}:ens192:off:{{ coredns_vm.ipaddr }}" # noqa 204

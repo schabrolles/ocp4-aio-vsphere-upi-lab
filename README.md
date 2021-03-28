@@ -120,7 +120,7 @@ ansible-playbook destroy-aio-lab.yml -e cluster=true -e config_local_dns=true
 5. Unzipped versions of the binaries installed in the **bin** folder
 6. In the **install-dir** folder:
    1. master.ign and worker.ign
-   2. Copy of the install-config.yaml
+   2. Copy of the install-ocp_config.yaml
 7. A folder is created in the vCenter under the mentioned datacenter and the template is imported
 8. The template file is edited to carry certain default settings and runtime parameters common to all the VMs
 9. VMs (coredns, lb, bootstrap, master0-2, worker0-2) are generated in the designated folder and (in state of) **poweredon**

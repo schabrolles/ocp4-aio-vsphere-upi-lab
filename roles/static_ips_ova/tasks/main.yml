@@ -29,9 +29,9 @@
       - name: "{{ vcenter.network }}"
       wait_for_ip_address: no
       customvalues:
-        - key: guestinfo.ignition.config.data
+        - key: guestinfo.ignition.ocp_config.data
           value: "{{ BootstrapContent.content }}"
-        - key: guestinfo.ignition.config.data.encoding
+        - key: guestinfo.ignition.ocp_config.data.encoding
           value: base64
         - key: guestinfo.afterburn.initrd.network-kargs
           value: "ip={{ bootstrap_vm.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ bootstrap_vm.name }}:ens192:off:{{ coredns_vm.ipaddr }}" # noqa 204
@@ -67,9 +67,9 @@
       - name: "{{ vcenter.network }}"
       wait_for_ip_address: no
       customvalues:
-       - key: guestinfo.ignition.config.data
+       - key: guestinfo.ignition.ocp_config.data
          value: "{{ masterContent.content }}"
-       - key: guestinfo.ignition.config.data.encoding
+       - key: guestinfo.ignition.ocp_config.data.encoding
          value: base64
        - key: guestinfo.afterburn.initrd.network-kargs
          value: "ip={{ item.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ item.name }}:ens192:off:{{ coredns_vm.ipaddr }}" # noqa 204
@@ -105,9 +105,9 @@
       - name: "{{ vcenter.network }}"
       wait_for_ip_address: no
       customvalues:
-       - key: guestinfo.ignition.config.data
+       - key: guestinfo.ignition.ocp_config.data
          value: "{{ workerContent.content }}"
-       - key: guestinfo.ignition.config.data.encoding
+       - key: guestinfo.ignition.ocp_config.data.encoding
          value: base64
        - key: guestinfo.afterburn.initrd.network-kargs
          value: "ip={{ item.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ item.name }}:ens192:off:{{ coredns_vm.ipaddr }}" # noqa 204

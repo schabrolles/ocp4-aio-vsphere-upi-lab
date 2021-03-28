@@ -24,13 +24,13 @@
     mode: 0664
 
 - name: Create CoreDNS transpiled ignition file
-  shell: "{{ playbook_dir }}/bin/fcct -d {{ coredns_tempdir.path }} --pretty --strict < {{ coredns_tempdir.path }}/coredns.fcc > {{ coredns_tempdir.path }}/transpiled_config.ign" # noqa 301
+  shell: "{{ playbook_dir }}/bin/fcct -d {{ coredns_tempdir.path }} --pretty --strict < {{ coredns_tempdir.path }}/coredns.fcc > {{ coredns_tempdir.path }}/transpiled_ocp_config.ign" # noqa 301
 
 - name: Set coredns_ign Fact
   #set_fact:
-  #coredns_ign: "{{ lookup('file', '{{ coredns_tempdir.path }}/transpiled_config.ign') | b64encode }}" # noqa 207
+  #coredns_ign: "{{ lookup('file', '{{ coredns_tempdir.path }}/transpiled_ocp_config.ign') | b64encode }}" # noqa 207
   slurp:
-    src: "{{ coredns_tempdir.path }}/transpiled_config.ign"
+    src: "{{ coredns_tempdir.path }}/transpiled_ocp_config.ign"
   register: coredns_ign
   
 
@@ -57,9 +57,9 @@
     - name: "{{ vcenter.network }}"
     wait_for_ip_address: no
     customvalues:
-     - key: guestinfo.ignition.config.data
+     - key: guestinfo.ignition.ocp_config.data
        value: "{{ coredns_ign.content }}"
-     - key: guestinfo.ignition.config.data.encoding
+     - key: guestinfo.ignition.ocp_config.data.encoding
        value: base64
      - key: guestinfo.afterburn.initrd.network-kargs
        value: "ip={{ coredns_vm.ipaddr }}::{{ static_ip.gateway }}:{{ static_ip.netmask }}:{{ infraID.stdout }}-{{ coredns_vm.name }}:ens192:off:{{ coredns_vm.upstream_dns }}" # noqa 204

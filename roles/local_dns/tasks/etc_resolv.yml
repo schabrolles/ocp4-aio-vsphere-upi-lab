@@ -16,4 +16,4 @@
   lineinfile:
     path: /etc/resolv.conf
     regexp: '^search'
-    line: "search {{ config.cluster_domain }} {{ config.base_domain }}"
+    line: "search {{ ocp_config.cluster_domain }} {{ ocp_config.base_domain }}"

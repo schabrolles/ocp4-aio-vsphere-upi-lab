@@ -1,9 +1,9 @@
 apiVersion: v1
-baseDomain: {{ config.base_domain }}
+baseDomain: {{ ocp_config.base_domain }}
 compute:
 - hyperthreading: Enabled
   name: worker
-{% if config.provider is defined and 'none' in config.provider %}
+{% if ocp_config.provider is defined and 'none' in ocp_config.provider %}
   replicas: {{ worker_vms | length }}
 {% else %}
   replicas: 0
@@ -13,9 +13,9 @@ controlPlane:
   name: master
   replicas: 3
 metadata:
-  name: {{ config.cluster_name }}
+  name: {{ ocp_config.cluster_name }}
 platform:
-{% if config.provider is defined and 'none' in config.provider %}
+{% if ocp_config.provider is defined and 'none' in ocp_config.provider %}
   none: {}
 {% else %}
   vsphere:
@@ -28,6 +28,6 @@ platform:
     folder: {{ vcenter.folder_absolute_path }}
 {% endif %}
 {% endif %}
-fips: {{ config.fips }}
-pullSecret: '{{ config.pull_secret | to_json }}'
-sshKey: '{{ config.installer_ssh_key }}'
+fips: {{ ocp_config.fips }}
+pullSecret: '{{ ocp_config.pull_secret | to_json }}'
+sshKey: '{{ ocp_config.installer_ssh_key }}'

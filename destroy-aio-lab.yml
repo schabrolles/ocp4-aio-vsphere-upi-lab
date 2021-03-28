@@ -30,15 +30,15 @@
         - resolv_conf_backup.stat.exists
         - ansible_facts.services["systemd-resolved.service"].state != "running"
 
-    - name: stat {{ config.cluster_domain }}.conf
+    - name: stat {{ ocp_config.cluster_domain }}.conf
       stat:
-        path: "/etc/systemd/resolved.conf.d/{{ config.cluster_domain }}.conf"
+        path: "/etc/systemd/resolved.conf.d/{{ ocp_config.cluster_domain }}.conf"
       register: resolved_conf
       when: config_local_dns is defined
 
     - name: Delete resolved conf file
       file:
-        path: "/etc/systemd/resolved.conf.d/{{ config.cluster_domain }}.conf"
+        path: "/etc/systemd/resolved.conf.d/{{ ocp_config.cluster_domain }}.conf"
         state: absent
       become: yes
       when:

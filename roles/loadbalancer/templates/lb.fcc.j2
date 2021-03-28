@@ -4,7 +4,7 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        - {{ config.installer_ssh_key }}
+        - {{ ocp_config.installer_ssh_key }}
 storage:
   files:
     - path: /etc/haproxy/haproxy.cfg

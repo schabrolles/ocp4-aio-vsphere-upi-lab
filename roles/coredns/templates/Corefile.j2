@@ -6,7 +6,7 @@
     errors
 }
 
-{{ config.cluster_domain }}:53 {
+{{ ocp_config.cluster_domain }}:53 {
     file /root/coredns.db
     log
     errors
